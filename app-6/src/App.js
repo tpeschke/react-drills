@@ -1,8 +1,31 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Todo from "./Todo";
 
 class App extends Component {
+  constructor() {
+    super()
+
+    this.state = {
+      list: ['shopping','dry-cleaning'],
+      chore: ''
+    }
+  }
+
+  addChore() {
+    var newList = this.state.list;
+      if (newList.indexOf(this.state.chore) === -1) {
+           newList.push(this.state.chore)} 
+    var sortList = newList.sort();
+    this.setState({list: sortList})
+  }
+
+  holdChore(e) {
+    var tempChore = e;
+    this.setState({chore: tempChore})
+  }
+
   render() {
     return (
       <div className="App">
@@ -10,9 +33,11 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h2>Welcome to React</h2>
         </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <h1>To Do List</h1>
+        <input placeholder="Enter New Task" onChange={e => this.holdChore(e.target.value)}/>
+        <button onClick={e => this.addChore()}>Add</button>
+        <Todo
+        list={this.state.list} />
       </div>
     );
   }
